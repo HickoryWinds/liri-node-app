@@ -10,7 +10,7 @@
 :space_invader:
 #### The LIRI bot retrieves 3 type of information based on the user's inquiry.
 Inquiry Method | Search Item | Database Queried | Information Retrieved
-------- | ---------------- | ---------------------
+-------------- | ----------- | ---------------- | ---------------------
 movie-this | Movie Name | OMDB | Movie Title
 -- | -- |-- | Year Released 
 -- | -- |-- | IMDB Rating
