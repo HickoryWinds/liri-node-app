@@ -138,7 +138,8 @@ function concertThis(name) {
                     // console.log(response.data[i]);
                     console.log(response.data[i].venue.name);
                     console.log(response.data[i].venue.city + " " + response.data[i].venue.region + " " + response.data[i].venue.country);
-                    var dateTime = response.data[i].datetime;
+                    var dateTime = response.data[i].datetime
+                    // convert from ISO8601 format to MM/DD/YYYY
                     console.log(moment(dateTime).format("MM/DD/YYYY"));
                 }
             }
