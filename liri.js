@@ -16,10 +16,10 @@ var fs = require("fs");
 
 // variables to store input for search option and the name to search for
 // note that argv[0] is the node command and argv[1] is the js file to run
-// Search option
-var searchType = nodeArg[2];
 // variable store input to be processed
 var nodeArg = process.argv;
+// Search option
+var searchType = nodeArg[2];
 // array to store string to search for
 var name = [];
 // process arg[3] and greater to split off search string
@@ -171,7 +171,7 @@ function concertThis(name) {
 function spotThis(name) {
 // start spotify query
 var searchName = name.join(" ");
-spotify.search({ type: 'track', query: searchName, limit: '5' }, function(err, data) {
+spotify.search({ type: 'track', query: searchName, limit: '20' }, function(err, data) {
     // set up error logging
     if (err) {
       return console.log('Error occurred: ' + err);
