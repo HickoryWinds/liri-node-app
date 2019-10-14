@@ -10,9 +10,6 @@ var keys = require("./keys.js");
 // console.log(keys.spotify);
 
 var spotify = new Spotify(keys.spotify);
-// console.log(spotify);
-
-// requestAnimationFrame("dotenv").config();
 
 // commands: concert-this, spotify-this-song, movie-this, do-what-it-says
 
@@ -31,14 +28,6 @@ for (var i = 3; i < nodeArg.length; i++) {
     name.push(nodeArg[i]);
     // console.log(name);
 }
-// var searchName = name.join(" ");
-// movieName1 = process.argv[3];
-// movieName2 = process.argv[4];
-// ...
-// console.log(movieName1 + " " + movieName2);
-// console.log(searchName);
-
-
 
 if (searchType == "movie-this") {
     movieThis(name)
@@ -89,9 +78,6 @@ function movieThis(name) {
         });
     };
     //end movie query
-    
-
-
 
 if (searchType == "concert-this") {
  concertThis(name);
@@ -106,14 +92,14 @@ function concertThis(name) {
     // console.log(queryUrl);
     axios.get(queryUrl_BIT).then(
         function(response) {
-            var count = Object.keys(response.data).length;
-            // console.log(typeof(count));
-            // console.log(count);
+            var BIT = Object.keys(response.data).length;
+            // console.log(typeof(BIT));
+            // console.log(BIT);
             // console.log("----------------");
-            if (count === 0 || (response.data[0].venue == undefined)) {
+            if (BIT === 0 || (response.data[0].venue == undefined)) {
                 console.log("\nNo concert listings found.")
             } else {
-                for (var i = 0; i < count; i++) {
+                for (var i = 0; i < BIT; i++) {
                     console.log("\nConcert Listing " + (i + 1));
                     // console.log(JSON.stringify(response.data[i]));
                     // console.log(response.data[i]);
@@ -161,22 +147,21 @@ spotify.search({ type: 'track', query: searchName, limit: '5' }, function(err, d
     if (err) {
       return console.log('Error occurred: ' + err);
     }
-    for (var j = 0; j < 2; j++) {
-        
-        //   console.log(data.tracks.items[0].artists); 
-        //   console.log(data.tracks.items[0].name); 
-        //   console.log(data.tracks.items[0].album.name); 
-        //   console.log(data.tracks.items[0].album.artists[0].name); 
-        //   console.log(data.tracks.items[0].preview_url); 
-        console.log(data.tracks.items[j].name); 
-        console.log(data.tracks.items[j].album.name); 
-        console.log(data.tracks.items[j].album.artists[0].name); 
-        console.log(data.tracks.items[j].preview_url); 
-        // console.log(JSON.stringify(data.tracks.items[j].album)); 
-        // console.log(data.tracks); 
-        
+    var Spot = Object.keys(data.tracks.items).length;
+    // console.log(Spot);
+
+    for (var j = 0; j < Spot; j++) {
+         
+        // console.log(JSON.stringify(data.items[j])); 
+        // if ((searchName ===  data.tracks.items[j].name) || (searchName  + " - Remastered" ===  (data.tracks.items[j].name))) {
+            // console.log(JSON.stringify(data.tracks.items[j])); 
+            console.log("\nTrack Name: " + data.tracks.items[j].name); 
+            console.log("Album: " + data.tracks.items[j].album.name); 
+            console.log("Artist: " + data.tracks.items[j].album.artists[0].name); 
+            console.log("Preview URL: " + data.tracks.items[j].preview_url); 
+            console.log("--------------");
+        // }
     }
-    
 });
 // end spotify query
 }
