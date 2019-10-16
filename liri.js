@@ -33,25 +33,22 @@ var spotify = new Spotify(keys.spotify);
 // choose which option to run
 if (searchType == "movie-this") {
     movieThis(name)
-}
-
-if (searchType == "concert-this") {
+} else if
+ (searchType == "concert-this") {
     concertThis(name);
-}
-
-if (searchType == "spotify-this-song") {
+} else if
+(searchType == "spotify-this-song") {
     spotThis(name);
-}
-
-if (searchType == "do-what-it-says") {
+} else if 
+(searchType == "do-what-it-says") {
     // set up read from text file
     fs.readFile("random.txt", "utf8", function(error, data) {
         // if error is thrown, display error to user on console
         if (error) {
             return console.log(error);
-          }
-          // split data into module to run, dataArr[0],
-          // and inquiry string, dataArr[1], based on comma separator
+        }
+        // split data into module to run, dataArr[0],
+        // and inquiry string, dataArr[1], based on comma separator
           var dataArr = data.split(",");
           var operation = dataArr[0];
           // split inquiry string so it can be reassembled in the proper
@@ -60,14 +57,17 @@ if (searchType == "do-what-it-says") {
           // choose option to run based on what is written in text file
           if (operation == "spotify-this-song") {
               spotThis(lookFor);
-          }
-          if (operation == "concert-this") {
-              concertThis(lookFor);
-          }
-          if (operation == "movie-this") {
-              movieThis(lookFor);
-          }
-    });
+            }
+            if (operation == "concert-this") {
+                concertThis(lookFor);
+            }
+            if (operation == "movie-this") {
+                movieThis(lookFor);
+            }
+        });
+} else {
+    // if gibberish, no entry, or a search type not given, notify user
+    console.log("\nYou must enter a search type: 'spotify-this-song','concert-this','movie-this' or 'do-what-it-says' ")
 }
 
 
@@ -120,22 +120,22 @@ function concertThis(name) {
     var searchName = name.join("+");
     // Then run an axios request to Bands in Town API
     // var queryUrl_BIT = "https://rest.bandsintown.com/artists/celine+dion/events?app_id=codingbootcamp";
+    // default search
+    if (searchName === "") {
+        searchName = "Paul+McCartney";
+    }
     var queryUrl_BIT = "https://rest.bandsintown.com/artists/" + searchName + "/events?app_id=codingbootcamp";
     // Debug code
-    // console.log(queryUrl);
     axios.get(queryUrl_BIT).then(
         function(response) {
             var BIT = Object.keys(response.data).length;
-            // console.log(typeof(BIT));
-            // console.log(BIT);
-            // console.log("----------------");
-            if (BIT === 0 || (response.data[0].venue == undefined)) {
+            console.log("RESD " + response.data);
+            console.log("\nArtist: " + searchName.split("+").join(" "))
+            if (BIT === 0 || response.data === undefined) {
                 console.log("\nNo concert listings found.")
             } else {
                 for (var i = 0; i < BIT; i++) {
                     console.log("\nConcert Listing " + (i + 1));
-                    // console.log(JSON.stringify(response.data[i]));
-                    // console.log(response.data[i]);
                     console.log(response.data[i].venue.name);
                     console.log(response.data[i].venue.city + " " + response.data[i].venue.region + " " + response.data[i].venue.country);
                     var dateTime = response.data[i].datetime
@@ -171,7 +171,12 @@ function concertThis(name) {
 
 function spotThis(name) {
 // start spotify query
-var searchName = name.join(" ");
+if (name == "") {
+    //default if no name entered
+    var searchName = "The Weight"
+} else {
+    var searchName = name.join(" ");
+}
 spotify.search({ type: 'track', query: searchName, limit: '20' }, function(err, data) {
     // set up error logging
     if (err) {
