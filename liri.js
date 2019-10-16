@@ -129,7 +129,6 @@ function concertThis(name) {
     axios.get(queryUrl_BIT).then(
         function(response) {
             var BIT = Object.keys(response.data).length;
-            console.log("RESD " + response.data);
             console.log("\nArtist: " + searchName.split("+").join(" "))
             if (BIT === 0 || response.data === undefined) {
                 console.log("\nNo concert listings found.")
